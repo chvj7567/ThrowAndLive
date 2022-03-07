@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D _rb;
     Define.State _state;
+    SpriteRenderer _spriteRenderer;
 
     public bool IsJumping { get; private set; }
 
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour
         _maxSpeed = 5f;
         _jumpPower = 5f;
         _rb = GetComponent<Rigidbody2D>();
+        _rb.freezeRotation = true;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _state = Define.State.Idle;
         IsJumping = false;
     }
@@ -93,12 +96,16 @@ public class PlayerController : MonoBehaviour
                 IsJumping = false;
                 State = Define.State.Idle;
             }
+            else
+            {
+                Debug.Log(IsJumping);
+            }
         }
     }
 
     private void UpdateRun()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (!IsJumping && Input.GetButtonDown("Jump"))
         {
             State = Define.State.Jump;
         }
@@ -114,7 +121,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateIdle()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (!IsJumping && Input.GetButtonDown("Jump"))
         {
             State = Define.State.Jump;
         }
@@ -132,6 +139,15 @@ public class PlayerController : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         _rb.AddForce(Vector2.right * horizontal, ForceMode2D.Impulse);
+
+        if (_rb.velocity.x > 0)
+        {
+            _spriteRenderer.flipX = false;
+        }
+        else if (_rb.velocity.x < 0)
+        {
+            _spriteRenderer.flipX = true;
+        }
 
         if (_rb.velocity.x > _maxSpeed)
         {
