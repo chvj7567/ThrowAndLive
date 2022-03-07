@@ -53,10 +53,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("Jump"))
-        {
-            _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-        }
         switch (_state)
         {
             case Define.State.Idle:
@@ -89,16 +85,13 @@ public class PlayerController : MonoBehaviour
         else
         {
             Debug.DrawRay(_rb.position, Vector2.down, new Color(0, 1, 0));
-            RaycastHit2D hit = Physics2D.Raycast(_rb.position, Vector2.down, 1, LayerMask.GetMask("Road"));
-
-            if (hit.collider != null)
+            RaycastHit2D hit = Physics2D.Raycast(_rb.position, Vector2.down, 0.6f, LayerMask.GetMask("Road"));
+            
+            // hit.distance 조건 없애면 2단 점프 가능
+            if (hit.collider != null && hit.distance < 0.5f)
             {
                 IsJumping = false;
                 State = Define.State.Idle;
-            }
-            else
-            {
-                Debug.Log(IsJumping);
             }
         }
     }
