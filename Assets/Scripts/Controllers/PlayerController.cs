@@ -3,44 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseController
 {
-    [SerializeField]
-    float _maxSpeed;
-    [SerializeField]
-    float _jumpPower;
-
-    Rigidbody2D _rb;
-    Define.State _state;
-    SpriteRenderer _spriteRenderer;
-
-    public bool IsJumping { get; private set; }
-
-    public Define.State State
-    {
-        get { return _state; }
-        set
-        {
-            _state = value;
-
-            Animator anim = GetComponent<Animator>();
-            switch (_state)
-            {
-                case Define.State.Idle:
-                    anim.Play("IDLE");
-                    break;
-                case Define.State.Run:
-                    anim.Play("RUN");
-                    break;
-                case Define.State.Jump:
-                    anim.Play("JUMP");
-                    break;
-                case Define.State.Die:
-                    break;
-            }
-        }
-    }
-    private void Awake()
+    public override void Init()
     {
         _maxSpeed = 5f;
         _jumpPower = 5f;
@@ -49,33 +14,15 @@ public class PlayerController : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _state = Define.State.Idle;
         IsJumping = false;
+        GameObjectType = Define.GameObjects.Player;
     }
 
-    private void Update()
-    {
-        switch (_state)
-        {
-            case Define.State.Idle:
-                UpdateIdle();
-                break;
-            case Define.State.Run:
-                UpdateRun();
-                break;
-            case Define.State.Jump:
-                UpdateJump();
-                break;
-            case Define.State.Die:
-                UpdateDie();
-                break;
-        }
-    }
-
-    private void UpdateDie()
+    protected override void UpdateDie()
     {
 
     }
 
-    private void UpdateJump()
+    protected override void UpdateJump()
     {
         if (!IsJumping)
         {
@@ -96,7 +43,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void UpdateRun()
+    protected override void UpdateRun()
     {
         if (!IsJumping && Input.GetButtonDown("Jump"))
         {
@@ -112,7 +59,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void UpdateIdle()
+    protected override void UpdateIdle()
     {
         if (!IsJumping && Input.GetButtonDown("Jump"))
         {
@@ -127,10 +74,10 @@ public class PlayerController : MonoBehaviour
             State = Define.State.Idle;
         }
     }
-
-    private void FixedUpdate()
+    protected override void FixedUpdateRun()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
+
         _rb.AddForce(Vector2.right * horizontal, ForceMode2D.Impulse);
 
         if (_rb.velocity.x > 0)
