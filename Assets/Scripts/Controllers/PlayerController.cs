@@ -7,15 +7,44 @@ public class PlayerController : BaseController
 {
     float _jumpPower;
     bool _isJumping;
+    int _jumpCount;
+    int _JumpMaxCount;
     public override void Init()
     {
         _maxSpeed = 5f;
         _jumpPower = 5f;
+        _jumpCount = 1;
+        _JumpMaxCount = 1;
         _rb = Util.GetOrAddComponent<Rigidbody2D>(gameObject);
         _rb.freezeRotation = true;
         _spriteRenderer = Util.GetOrAddComponent<SpriteRenderer>(gameObject);
         State = Define.State.Idle;
         GameObjectType = Define.GameObjects.Player;
+    }
+
+    protected override void UpdateJump()
+    {
+        if (Input.GetButtonDown("Jump") && _jumpCount < _JumpMaxCount)
+        {
+            _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
+            _jumpCount++;
+        }
+
+        if (!_isJumping)
+        {
+            _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
+            _isJumping = true;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Road"))
+        {
+            State = Define.State.Idle;
+            _isJumping = false;
+            _jumpCount = 1;
+        }
     }
 
     protected override void UpdateRun()
@@ -71,27 +100,6 @@ public class PlayerController : BaseController
         else if (_rb.velocity.x < _maxSpeed * -1)
         {
             _rb.velocity = new Vector2(_maxSpeed * -1, _rb.velocity.y);
-        }
-    }
-
-    protected override void Jump()
-    {
-        if (State != Define.State.Jump)
-            return;
-
-        if (!_isJumping)
-        {
-            _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-            _isJumping = true;
-        }
-
-        RaycastHit2D hit = Physics2D.Raycast(_rb.position, Vector2.down, 1, ~LayerMask.GetMask("Player"));
-
-        if (hit.collider != null && hit.distance < 0.7f)
-        {
-            //Debug.Log("Run -> Jump");
-            State = Define.State.Idle;
-            _isJumping = false;
         }
     }
 }

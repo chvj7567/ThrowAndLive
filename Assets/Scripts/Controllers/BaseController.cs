@@ -63,7 +63,6 @@ public abstract class BaseController : MonoBehaviour
     void FixedUpdate()
     {
         Run();
-        Jump();
     }
 
     public abstract void Init();
@@ -71,6 +70,5 @@ public abstract class BaseController : MonoBehaviour
     protected virtual void UpdateRun() { }
     protected virtual void Run() { }
     protected virtual void UpdateJump() { }
-    protected virtual void Jump() { }
     protected virtual void UpdateDie() { }
 }
