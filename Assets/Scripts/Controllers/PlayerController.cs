@@ -7,7 +7,6 @@ public class PlayerController : BaseController
 {
     float _jumpPower;
     bool _isJumping;
-    
     public override void Init()
     {
         _maxSpeed = 5f;
@@ -23,12 +22,12 @@ public class PlayerController : BaseController
     {
         if (Input.GetButtonDown("Jump"))
         {
-            Debug.Log("Run -> Jump");
+            //Debug.Log("Run -> Jump");
             State = Define.State.Jump;
         }
         else if (Input.GetButtonUp("Horizontal"))
         {
-            Debug.Log("Run -> Idle");
+            //Debug.Log("Run -> Idle");
             State = Define.State.Idle;
         }
     }
@@ -37,12 +36,12 @@ public class PlayerController : BaseController
     {
         if (Input.GetButtonDown("Jump"))
         {
-            Debug.Log("Idle -> Jump");
+            //Debug.Log("Idle -> Jump");
             State = Define.State.Jump;
         }
         else if (Input.GetButton("Horizontal"))
         {
-            Debug.Log("Idle -> Run");
+            //Debug.Log("Idle -> Run");
             State = Define.State.Run;
         }
     }
@@ -88,9 +87,9 @@ public class PlayerController : BaseController
 
         RaycastHit2D hit = Physics2D.Raycast(_rb.position, Vector2.down, 1, ~LayerMask.GetMask("Player"));
 
-        if (hit.collider != null && hit.distance < 0.5f)
+        if (hit.collider != null && hit.distance < 0.7f)
         {
-            Debug.Log("Run -> Jump");
+            //Debug.Log("Run -> Jump");
             State = Define.State.Idle;
             _isJumping = false;
         }

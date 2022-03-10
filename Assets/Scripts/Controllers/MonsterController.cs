@@ -29,7 +29,7 @@ public class MonsterController : BaseController
 
         if (pos.x < Screen.width)
         {
-            Debug.Log("Idle -> Run");
+            //Debug.Log("Idle -> Run");
             State = Define.State.Run;
         }
     }
