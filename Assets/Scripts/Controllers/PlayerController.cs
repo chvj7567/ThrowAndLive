@@ -5,82 +5,53 @@ using UnityEngine;
 
 public class PlayerController : BaseController
 {
+    float _jumpPower;
+    bool _isJumping;
+    
     public override void Init()
     {
         _maxSpeed = 5f;
-        _jumpPower = 15f;
+        _jumpPower = 5f;
         _rb = Util.GetOrAddComponent<Rigidbody2D>(gameObject);
         _rb.freezeRotation = true;
         _spriteRenderer = Util.GetOrAddComponent<SpriteRenderer>(gameObject);
-        _state = Define.State.Idle;
-        IsJumping = false;
+        State = Define.State.Idle;
         GameObjectType = Define.GameObjects.Player;
-    }
-
-    protected override void UpdateDie()
-    {
-
-    }
-
-    protected override void UpdateJump()
-    {
-        if (!IsJumping)
-        {
-            _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-            IsJumping = true;
-        }
-        else
-        {
-            Invoke("JumpCheck", 0.1f);
-            
-        }
-    }
-
-    void JumpCheck()
-    {
-        Debug.DrawRay(_rb.position, Vector2.down, new Color(0, 1, 0));
-        RaycastHit2D hit = Physics2D.Raycast(_rb.position, Vector2.down, 1, ~LayerMask.GetMask("Player"));
-
-        if (hit.collider != null && hit.distance < 0.6f)
-        {
-            IsJumping = false;
-            State = Define.State.Idle;
-        }
     }
 
     protected override void UpdateRun()
     {
-        if (!IsJumping && Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
+            Debug.Log("Run -> Jump");
             State = Define.State.Jump;
-        }
-        else if (Input.GetButton("Horizontal") || Input.GetButtonDown("Horizontal"))
-        {
-            State = Define.State.Run;
         }
         else if (Input.GetButtonUp("Horizontal"))
         {
+            Debug.Log("Run -> Idle");
             State = Define.State.Idle;
         }
     }
 
     protected override void UpdateIdle()
     {
-        if (!IsJumping && Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
+            Debug.Log("Idle -> Jump");
             State = Define.State.Jump;
         }
-        else if (Input.GetButton("Horizontal") || Input.GetButtonDown("Horizontal"))
+        else if (Input.GetButton("Horizontal"))
         {
+            Debug.Log("Idle -> Run");
             State = Define.State.Run;
         }
-        else
-        {
-            State = Define.State.Idle;
-        }
     }
-    protected override void FixedUpdateRun()
+
+    protected override void Run()
     {
+        if (State != Define.State.Run)
+            return;
+
         float horizontal = Input.GetAxisRaw("Horizontal");
 
         _rb.AddForce(Vector2.right * horizontal, ForceMode2D.Impulse);
@@ -101,6 +72,27 @@ public class PlayerController : BaseController
         else if (_rb.velocity.x < _maxSpeed * -1)
         {
             _rb.velocity = new Vector2(_maxSpeed * -1, _rb.velocity.y);
+        }
+    }
+
+    protected override void Jump()
+    {
+        if (State != Define.State.Jump)
+            return;
+
+        if (!_isJumping)
+        {
+            _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
+            _isJumping = true;
+        }
+
+        RaycastHit2D hit = Physics2D.Raycast(_rb.position, Vector2.down, 1, ~LayerMask.GetMask("Player"));
+
+        if (hit.collider != null && hit.distance < 0.5f)
+        {
+            Debug.Log("Run -> Jump");
+            State = Define.State.Idle;
+            _isJumping = false;
         }
     }
 }

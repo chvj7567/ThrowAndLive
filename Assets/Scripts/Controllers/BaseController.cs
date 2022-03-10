@@ -5,13 +5,10 @@ using UnityEngine;
 public abstract class BaseController : MonoBehaviour
 {
     protected float _maxSpeed;
-    protected float _jumpPower;
-
     protected Rigidbody2D _rb;
     protected Define.State _state;
     protected SpriteRenderer _spriteRenderer;
 
-    public bool IsJumping { get; protected set; }
     public Define.GameObjects GameObjectType { get; protected set; } = Define.GameObjects.Unknown;
 
     public Define.State State
@@ -46,7 +43,7 @@ public abstract class BaseController : MonoBehaviour
 
     void Update()
     {
-        switch (_state)
+        switch (State)
         {
             case Define.State.Idle:
                 UpdateIdle();
@@ -61,23 +58,19 @@ public abstract class BaseController : MonoBehaviour
                 UpdateDie();
                 break;
         }
-        Debug.Log(_state);
     }
 
     void FixedUpdate()
     {
-        switch (_state)
-        {
-            case Define.State.Run:
-                FixedUpdateRun();
-                break;
-        }
+        Run();
+        Jump();
     }
 
     public abstract void Init();
     protected virtual void UpdateIdle() { }
     protected virtual void UpdateRun() { }
-    protected virtual void FixedUpdateRun() { }
+    protected virtual void Run() { }
     protected virtual void UpdateJump() { }
+    protected virtual void Jump() { }
     protected virtual void UpdateDie() { }
 }
