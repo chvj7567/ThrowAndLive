@@ -8,10 +8,10 @@ public class PlayerController : BaseController
     public override void Init()
     {
         _maxSpeed = 5f;
-        _jumpPower = 5f;
-        _rb = GetComponent<Rigidbody2D>();
+        _jumpPower = 15f;
+        _rb = Util.GetOrAddComponent<Rigidbody2D>(gameObject);
         _rb.freezeRotation = true;
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = Util.GetOrAddComponent<SpriteRenderer>(gameObject);
         _state = Define.State.Idle;
         IsJumping = false;
         GameObjectType = Define.GameObjects.Player;
@@ -31,15 +31,20 @@ public class PlayerController : BaseController
         }
         else
         {
-            Debug.DrawRay(_rb.position, Vector2.down, new Color(0, 1, 0));
-            RaycastHit2D hit = Physics2D.Raycast(_rb.position, Vector2.down, 0.6f, LayerMask.GetMask("Road"));
+            Invoke("JumpCheck", 0.1f);
             
-            // hit.distance 조건 없애면 2단 점프 가능
-            if (hit.collider != null && hit.distance < 0.5f)
-            {
-                IsJumping = false;
-                State = Define.State.Idle;
-            }
+        }
+    }
+
+    void JumpCheck()
+    {
+        Debug.DrawRay(_rb.position, Vector2.down, new Color(0, 1, 0));
+        RaycastHit2D hit = Physics2D.Raycast(_rb.position, Vector2.down, 1, ~LayerMask.GetMask("Player"));
+
+        if (hit.collider != null && hit.distance < 0.6f)
+        {
+            IsJumping = false;
+            State = Define.State.Idle;
         }
     }
 

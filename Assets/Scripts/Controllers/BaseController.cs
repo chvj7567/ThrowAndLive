@@ -61,6 +61,7 @@ public abstract class BaseController : MonoBehaviour
                 UpdateDie();
                 break;
         }
+        Debug.Log(_state);
     }
 
     void FixedUpdate()
