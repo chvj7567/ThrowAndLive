@@ -113,5 +113,10 @@ public class MonsterController : BaseController
     private void OnCollisionEnter2D(Collision2D collision)
     {
         _dragCheck = false;
+
+        if (collision.gameObject.name == "Bullet")
+        {
+            MainManager.Game.Despawn(gameObject);
+        }
     }
 }

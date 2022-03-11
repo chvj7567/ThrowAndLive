@@ -34,7 +34,7 @@ public class ResourceManager
             return null;
         }
 
-        if (path == "Monster")
+        if (path == "Monster" || path == "Bullet")
         {
             Util.GetOrAddComponent<Poolable>(original);
         }

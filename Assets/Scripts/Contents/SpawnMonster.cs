@@ -25,7 +25,6 @@ public class SpawnMonster : MonoBehaviour
         _pos.Add(new SpawnPosition(-21f, -2.4f));
         _pos.Add(new SpawnPosition(21f, 10));
         _pos.Add(new SpawnPosition(-21f, 10f));
-        Debug.Log(_pos.Count);
     }
 
     void Start()

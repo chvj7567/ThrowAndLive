@@ -9,8 +9,11 @@ public class PlayerController : BaseController
     bool _isJumping;
     int _jumpCount;
     int _JumpMaxCount;
+    bool _check;
+
     public override void Init()
     {
+        _check = false;
         _maxSpeed = 5f;
         _jumpPower = 5f;
         _jumpCount = 1;
@@ -98,6 +101,8 @@ public class PlayerController : BaseController
 
         _rb.AddForce(Vector2.right * horizontal, ForceMode2D.Impulse);
 
+        StartCoroutine(CreateBullet(_check));
+
         if (_rb.velocity.x > 0)
         {
             _spriteRenderer.flipX = false;
@@ -115,5 +120,38 @@ public class PlayerController : BaseController
         {
             _rb.velocity = new Vector2(_maxSpeed * -1, _rb.velocity.y);
         }
+    }
+
+    IEnumerator CreateBullet(bool check)
+    {
+        if (!check)
+        {
+            _check = true;
+            GameObject bullet = MainManager.Resource.Instantiate("Bullet");
+            BulletController bulletController = Util.GetOrAddComponent<BulletController>(bullet);
+
+            if (_rb.velocity.x > 0)
+            {
+                _spriteRenderer.flipX = false;
+                bullet.transform.position = transform.position + Vector3.right;
+                bulletController.Shoot(Vector3.right);
+            }
+            else if (_rb.velocity.x < 0)
+            {
+                _spriteRenderer.flipX = true;
+                bullet.transform.position = transform.position - Vector3.right;
+                bulletController.Shoot(-Vector3.right);
+            }
+
+            yield return new WaitForSeconds(1);
+
+            _check = false;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "Monster")
+            MainManager.Game.Despawn(gameObject);
     }
 }
