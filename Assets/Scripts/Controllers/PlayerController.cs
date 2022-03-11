@@ -10,6 +10,7 @@ public class PlayerController : BaseController
     int _jumpCount;
     int _JumpMaxCount;
     bool _check;
+    int _bulletDelay;
 
     public override void Init()
     {
@@ -18,6 +19,7 @@ public class PlayerController : BaseController
         _jumpPower = 5f;
         _jumpCount = 1;
         _JumpMaxCount = 1;
+        _bulletDelay = 1;
         _rb = Util.GetOrAddComponent<Rigidbody2D>(gameObject);
         _rb.freezeRotation = true;
         _spriteRenderer = Util.GetOrAddComponent<SpriteRenderer>(gameObject);
@@ -143,7 +145,7 @@ public class PlayerController : BaseController
                 bulletController.Shoot(-Vector3.right);
             }
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(_bulletDelay);
 
             _check = false;
         }
