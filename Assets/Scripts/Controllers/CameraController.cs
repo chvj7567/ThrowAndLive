@@ -39,4 +39,10 @@ public class CameraController : MonoBehaviour
     {
         _background = background;
     }
+
+    public void SetSightCamera(float sight)
+    {
+        Camera cam = Util.GetOrAddComponent<Camera>(gameObject);
+        cam.orthographicSize += sight;
+    }
 }

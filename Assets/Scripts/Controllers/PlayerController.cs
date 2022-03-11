@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerController : BaseController
 {
-    float _jumpPower;
+    public float _jumpPower;
     bool _isJumping;
     int _jumpCount;
     int _JumpMaxCount;
@@ -35,15 +35,29 @@ public class PlayerController : BaseController
             _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
             _isJumping = true;
         }
+
+        if (Input.GetButton("Horizontal"))
+        {
+            State = Define.State.Run;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Road"))
         {
-            State = Define.State.Idle;
             _isJumping = false;
             _jumpCount = 1;
+            if (Input.GetButton("Horizontal"))
+            {
+                //Debug.Log("Jump -> Run");
+                State = Define.State.Run;
+            }
+            else
+            {
+                //Debug.Log("Jump -> Idle");
+                State = Define.State.Idle;
+            }
         }
     }
 

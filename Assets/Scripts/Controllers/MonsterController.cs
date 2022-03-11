@@ -25,13 +25,7 @@ public class MonsterController : BaseController
 
     protected override void UpdateIdle()
     {
-        Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
-
-        if (pos.x < Screen.width)
-        {
-            //Debug.Log("Idle -> Run");
-            State = Define.State.Run;
-        }
+        State = Define.State.Run;
     }
 
     protected override void Run()

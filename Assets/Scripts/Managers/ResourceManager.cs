@@ -34,11 +34,7 @@ public class ResourceManager
             return null;
         }
 
-        // Prefabs 안의 자식 폴더 안의 프리펩이면 풀링 대상임을 지정
-        string name = path;
-        int index = name.IndexOf('/');
-
-        if (name.Substring(0, index + 1) == "Rocket")
+        if (path == "Monster")
         {
             Util.GetOrAddComponent<Poolable>(original);
         }

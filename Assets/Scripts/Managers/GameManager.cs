@@ -50,4 +50,21 @@ public class GameManager
 
         return bc.GameObjectType;
     }
+
+    public void Despawn(GameObject go)
+    {
+        Define.GameObjects type = GetWorldObjectType(go);
+
+        switch (type)
+        {
+            case Define.GameObjects.Background:
+                _background = null;
+                break;
+            case Define.GameObjects.Player:
+                _player = null;
+                break;
+        }
+
+        MainManager.Resource.Destroy(go);
+    }
 }

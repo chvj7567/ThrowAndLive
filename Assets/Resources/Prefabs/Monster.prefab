@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4551055988367162742}
   - component: {fileID: 5199638327450093744}
   - component: {fileID: 3422545218555183270}
+  - component: {fileID: -7114533025089321954}
   m_Layer: 6
   m_Name: Monster
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 8596640243658272642, guid: 5d4daff38e3d9174b873918abcf2c1d4,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -175,3 +176,16 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!114 &-7114533025089321954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699367037701531831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53bccbb92b9113f4e8b5adfab727f333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUsing: 0
