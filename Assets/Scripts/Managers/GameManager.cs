@@ -34,11 +34,11 @@ public class GameManager
                 break;
             case Define.GameObjects.Monster:
                 _monsters.Add(go);
-                go.GetComponent<SpriteRenderer>().sortingOrder = _sortOrder++;
+                Util.FindChild(go, "Square").GetComponent<SpriteRenderer>().sortingOrder = go.GetComponent<SpriteRenderer>().sortingOrder = _sortOrder++;
                 break;
             case Define.GameObjects.Player:
                 Player = go;
-                go.GetComponent<SpriteRenderer>().sortingOrder = _sortOrder++;
+                Util.FindChild(go, "Square").GetComponent<SpriteRenderer>().sortingOrder = go.GetComponent<SpriteRenderer>().sortingOrder = _sortOrder++;
                 break;
             case Define.GameObjects.MiniMap:
                 MiniMap = go;

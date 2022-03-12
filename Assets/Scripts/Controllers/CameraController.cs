@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    GameObject _player, _background;
+    GameObject _player;
     Vector3 cameraPos;
 
     void Awake()
@@ -15,11 +15,6 @@ public class CameraController : MonoBehaviour
     {
         Vector3 playerPos = _player.transform.position;
         transform.position = new Vector3(playerPos.x + cameraPos.x, transform.position.y, transform.position.z);
-        
-        if (_background != null)
-        {
-            _background.transform.position = new Vector3(transform.position.x, _background.transform.position.y, _background.transform.position.z);
-        }
     }
 
     public void SetPlayer(GameObject player)
@@ -33,11 +28,6 @@ public class CameraController : MonoBehaviour
             cameraPos = transform.position - _player.transform.position;
         else
             Debug.Log("Player is not Setting");
-    }
-
-    public void SetBackground(GameObject background)
-    {
-        _background = background;
     }
 
     public void SetSightCamera(float sight)
