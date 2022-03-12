@@ -19,7 +19,7 @@ public class SpawnMonster : MonoBehaviour
 
     void Awake()
     {
-        _spawnTime = 2f;
+        _spawnTime = 3f;
         _pos = new List<SpawnPosition>();
         _pos.Add(new SpawnPosition(21f, -2.4f));
         _pos.Add(new SpawnPosition(-21f, -2.4f));
@@ -38,7 +38,7 @@ public class SpawnMonster : MonoBehaviour
         {
             foreach (SpawnPosition pos in _pos)
             {
-                GameObject monster = MainManager.Resource.Instantiate("Monster");
+                GameObject monster = MainManager.Game.Spawn(Define.GameObjects.Monster, "Monster");
                 monster.transform.position = new Vector3(pos.X, pos.Y, 0f);
             }
 

@@ -11,6 +11,8 @@ public class Define
         Map,
         Monster,
         Player,
+        MiniMap,
+        MiniMapCamera,
     }
     public enum State
     {

@@ -5,9 +5,12 @@ using UnityEngine.Tilemaps;
 
 public class GameManager
 {
-    GameObject _background;
-    GameObject _map;
-    GameObject _player;
+    public GameObject Background { get; private set; }
+    public GameObject Map { get; private set; }
+    public GameObject Player { get; private set; }
+    public GameObject MiniMap { get; private set; }
+    public GameObject MiniMapCamera { get; private set; }
+
     HashSet<GameObject> _monsters = new HashSet<GameObject>();
 
     int _sortOrder = 0;
@@ -22,11 +25,11 @@ public class GameManager
         switch (type)
         {
             case Define.GameObjects.Background:
-                _background = go;
+                Background = go;
                 go.GetComponent<SpriteRenderer>().sortingOrder = _sortOrder++;
                 break;
             case Define.GameObjects.Map:
-                _map = go;
+                Map = go;
                 go.GetComponentInChildren<TilemapRenderer>().sortingOrder = _sortOrder;
                 break;
             case Define.GameObjects.Monster:
@@ -34,8 +37,14 @@ public class GameManager
                 go.GetComponent<SpriteRenderer>().sortingOrder = _sortOrder++;
                 break;
             case Define.GameObjects.Player:
-                _player = go;
+                Player = go;
                 go.GetComponent<SpriteRenderer>().sortingOrder = _sortOrder++;
+                break;
+            case Define.GameObjects.MiniMap:
+                MiniMap = go;
+                break;
+            case Define.GameObjects.MiniMapCamera:
+                MiniMapCamera = go;
                 break;
         }
 
@@ -58,10 +67,19 @@ public class GameManager
         switch (type)
         {
             case Define.GameObjects.Background:
-                _background = null;
+                Background = null;
                 break;
             case Define.GameObjects.Player:
-                _player = null;
+                Player = null;
+                break;
+            case Define.GameObjects.Map:
+                Map = null;
+                break;
+            case Define.GameObjects.MiniMap:
+                MiniMap = null;
+                break;
+            case Define.GameObjects.MiniMapCamera:
+                MiniMapCamera = null;
                 break;
         }
 

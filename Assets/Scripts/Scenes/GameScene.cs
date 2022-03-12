@@ -13,14 +13,14 @@ public class GameScene : BaseScene
         base.Init();
         GameObject background = MainManager.Game.Spawn(Define.GameObjects.Background, "Background");
         _map = MainManager.Game.Spawn(Define.GameObjects.Map, "Map");
-        
+        MainManager.Game.Spawn(Define.GameObjects.MiniMap, "MiniMap");
+        MainManager.Game.Spawn(Define.GameObjects.MiniMap, "MiniMap Camera");
         _player = MainManager.Game.Spawn(Define.GameObjects.Player, "Player");
         _fristPos = _player.transform.position;
 
         CameraController camera = Util.GetOrAddComponent<CameraController>(Camera.main.gameObject);
         camera.SetPlayer(_player);
         camera.SetCamera();
-        camera.SetBackground(background);
 
         GameObject spawning = new GameObject("@SpawningMonster");
         Util.GetOrAddComponent<SpawnMonster>(spawning);
