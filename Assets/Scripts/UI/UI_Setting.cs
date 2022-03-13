@@ -23,8 +23,8 @@ public class UI_Setting : UI_Base
         Bind<Slider>(typeof(Sliders));
         Bind<Image>(typeof(Images));
 
-        _volume = Get<Slider>((int)Sliders.VolumeSlider).gameObject.GetComponent<Slider>();
-        _back = GetImage((int)Images.Back).gameObject.GetComponent<Image>();
+        _volume = Get<Slider>((int)Sliders.VolumeSlider);
+        _back = GetImage((int)Images.Back);
 
         BindEvent(_volume.gameObject, SliderVolume);
         BindEvent(_back.gameObject, BackGame, Define.UIEvent.Click);

@@ -8,10 +8,11 @@ public class GameManager
     public GameObject Background { get; private set; }
     public GameObject Map { get; private set; }
     public GameObject Player { get; private set; }
-    public GameObject MiniMap { get; private set; }
     public GameObject MiniMapCamera { get; private set; }
 
-    public GameObject Spawning { get; private set; }
+    public bool IsGamimg { get; private set; }
+
+    GameObject Spawning;
 
     int _sortOrder = 0;
 
@@ -25,6 +26,8 @@ public class GameManager
         switch (type)
         {
             case Define.GameObjects.Background:
+                if (Background != null)
+                    return Background;
                 Background = go;
                 go.GetComponent<SpriteRenderer>().sortingOrder = _sortOrder++;
                 break;
@@ -39,9 +42,6 @@ public class GameManager
                 Player = go;
                 Util.FindChild(go, "Square").GetComponent<SpriteRenderer>().sortingOrder = go.GetComponent<SpriteRenderer>().sortingOrder = _sortOrder++;
                 break;
-            case Define.GameObjects.MiniMap:
-                MiniMap = go;
-                break;
             case Define.GameObjects.MiniMapCamera:
                 MiniMapCamera = go;
                 break;
@@ -50,19 +50,13 @@ public class GameManager
         return go;
     }
 
-    public Define.GameObjects GetWorldObjectType(GameObject go)
-    {
-        BaseController bc = go.GetComponent<BaseController>();
-        if (bc == null)
-            return Define.GameObjects.Unknown;
-
-        return bc.GameObjectType;
-    }
-
     public void Despawn(GameObject go)
     {
-        Define.GameObjects type = GetWorldObjectType(go);
+        MainManager.Resource.Destroy(go);
+    }
 
+    public void Despawn(Define.GameObjects type, GameObject go)
+    {
         switch (type)
         {
             case Define.GameObjects.Background:
@@ -71,13 +65,8 @@ public class GameManager
             case Define.GameObjects.Player:
                 Player = null;
                 break;
-            case Define.GameObjects.Monster:
-                break;
             case Define.GameObjects.Map:
                 Map = null;
-                break;
-            case Define.GameObjects.MiniMap:
-                MiniMap = null;
                 break;
             case Define.GameObjects.MiniMapCamera:
                 MiniMapCamera = null;
@@ -89,26 +78,34 @@ public class GameManager
 
     public void StartGame()
     {
+        IsGamimg = true;
         MainManager.Game.Spawn(Define.GameObjects.Map, "Map");
-        MainManager.Game.Spawn(Define.GameObjects.MiniMap, "MiniMap");
-        MainManager.Game.Spawn(Define.GameObjects.MiniMap, "MiniMap Camera");
+        MainManager.Game.Spawn(Define.GameObjects.MiniMapCamera, "MiniMapCamera");
         MainManager.Game.Spawn(Define.GameObjects.Player, "Player");
 
         CameraController camera = Util.GetOrAddComponent<CameraController>(Camera.main.gameObject);
         camera.SetPlayer(Player);
         camera.SetCamera();
 
-        Spawning = new GameObject("@SpawningMonster");
+        Spawning = new GameObject("@SpawnMonster");
         Util.GetOrAddComponent<SpawnMonster>(Spawning);
+
+        MainManager.UI.ShowUI("MiniMapUI", Define.UI.MiniMap);
+        MainManager.UI.ShowUI("ScoreUI", Define.UI.Score);
     }
 
     public void EndGame()
     {
-        Despawn(Player);
+        IsGamimg = false;
+        Despawn(Define.GameObjects.Map, Map);
+        Despawn(Define.GameObjects.MiniMapCamera, MiniMapCamera);
+        Despawn(Define.GameObjects.Player, Player);
         Despawn(Spawning);
-        Despawn(Map);
-        Despawn(MiniMap);
-        Despawn(MiniMapCamera);
+        Spawning = null;
+
+        MainManager.UI.HideUI(MainManager.UI.MiniMap, Define.UI.MiniMap);
+        MainManager.UI.HideUI(MainManager.UI.Move, Define.UI.Move);
+        //MainManager.UI.HideUI(MainManager.UI.Score, Define.UI.Score);
         MainManager.UI.ShowUI("EndUI", Define.UI.End);
     }
 

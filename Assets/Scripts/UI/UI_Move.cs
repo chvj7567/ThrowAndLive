@@ -21,9 +21,9 @@ public class UI_Move : UI_Base
     public override void Init()
     {
         Bind<Button>(typeof(Buttons));
-        _left = GetButton((int)Buttons.Left).gameObject.GetComponent<Button>();
-        _right = GetButton((int)Buttons.Right).gameObject.GetComponent<Button>();
-        _jump = GetButton((int)Buttons.Jump).gameObject.GetComponent<Button>();
+        _left = GetButton((int)Buttons.Left);
+        _right = GetButton((int)Buttons.Right);
+        _jump = GetButton((int)Buttons.Jump);
 
         BindEvent(gameObject, Move);
 

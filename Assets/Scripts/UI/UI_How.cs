@@ -17,7 +17,7 @@ public class UI_How : UI_Base
     public override void Init()
     {
         Bind<Image>(typeof(Images));
-        _back = GetImage((int)Images.Back).gameObject.GetComponent<Image>();
+        _back = GetImage((int)Images.Back);
         BindEvent(_back.gameObject, BackGame, Define.UIEvent.Click);
     }
 

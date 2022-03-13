@@ -303,6 +303,7 @@ GameObject:
   - component: {fileID: 267156265963294452}
   - component: {fileID: 267156265963294453}
   - component: {fileID: 267156265963294454}
+  - component: {fileID: 3886912057761667148}
   m_Layer: 5
   m_Name: EndUI
   m_TagString: Untagged
@@ -395,6 +396,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3886912057761667148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 267156265963294455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f5146645378dc4eb9fe728a6babc69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1571863409190368953
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,7 +420,7 @@ GameObject:
   - component: {fileID: 3716304057365512748}
   - component: {fileID: 2654046955760966980}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Record
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -473,7 +486,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Time : 0 second'
+  m_Text: 'Score : 0'
 --- !u!1 &3705013752610354824
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,7 +575,7 @@ GameObject:
   - component: {fileID: 6903513261625216455}
   - component: {fileID: 1670131343668136299}
   m_Layer: 5
-  m_Name: Description
+  m_Name: RecordBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -19,10 +19,10 @@ public class UI_Start : UI_Base
     public override void Init()
     {
         Bind<Image>(typeof(Images));
-        _start = GetImage((int)Images.Start).gameObject.GetComponent<Image>();
-        _how = GetImage((int)Images.How).gameObject.GetComponent<Image>();
-        _setting = GetImage((int)Images.Setting).gameObject.GetComponent<Image>();
-        _exit = GetImage((int)Images.Exit).gameObject.GetComponent<Image>();
+        _start = GetImage((int)Images.Start);
+        _how = GetImage((int)Images.How);
+        _setting = GetImage((int)Images.Setting);
+        _exit = GetImage((int)Images.Exit);
 
         BindEvent(_start.gameObject, StartGame, Define.UIEvent.Click);
         BindEvent(_how.gameObject, HowGame, Define.UIEvent.Click);

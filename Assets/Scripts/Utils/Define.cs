@@ -11,7 +11,6 @@ public class Define
         Map,
         Monster,
         Player,
-        MiniMap,
         MiniMapCamera,
     }
     public enum State
@@ -28,7 +27,8 @@ public class Define
         Setting,
         How,
         Move,
-        TimeScore,
+        MiniMap,
+        Score,
         End,
     }
 

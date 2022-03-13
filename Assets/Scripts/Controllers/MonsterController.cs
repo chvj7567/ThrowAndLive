@@ -21,6 +21,13 @@ public class MonsterController : BaseController
         _maxSpeed = 1f;
         _throwSpeed = 0.1f;
         _player = GameObject.FindGameObjectWithTag("Player");
+        GameObjectType = Define.GameObjects.Monster;
+        _state = Define.State.Idle;
+    }
+
+    private void OnEnable()
+    {
+        Init();
     }
 
     protected override void UpdateIdle()

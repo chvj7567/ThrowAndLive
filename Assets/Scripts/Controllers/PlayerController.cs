@@ -50,6 +50,11 @@ public class PlayerController : BaseController
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.name == "Monster")
+        {
+            MainManager.Game.EndGame();
+        }
+
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Road"))
         {
             _isJumping = false;
@@ -169,14 +174,6 @@ public class PlayerController : BaseController
             yield return new WaitForSeconds(_bulletDelay);
 
             _check = false;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.name == "Monster")
-        {
-            MainManager.Game.EndGame();
         }
     }
 }
