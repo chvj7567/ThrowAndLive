@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -28,21 +28,51 @@ public class MonsterController : BaseController
         State = Define.State.Run;
     }
 
+    protected override void UpdateDie()
+    {
+        MainManager.Game.Despawn(gameObject);
+    }
+
     protected override void Run()
     {
+        if (transform.position.x < -25f || transform.position.x > 25f)
+        {
+            State = Define.State.Die;
+            return;
+        }
+        if (transform.position.y < -5f || transform.position.y > 30f)
+        {
+            State = Define.State.Die;
+            return;
+        }
+
         if (_dragCheck)
             return;
 
         if (State != Define.State.Run)
             return;
-
-        if (Vector3.Dot(transform.right, _player.transform.position - transform.position) > 0)
+        
+        if (_player == null)
         {
-            horizontal = 1;
+            if (Vector3.Dot(transform.right, Vector3.zero - transform.position) > 0)
+            {
+                horizontal = 1;
+            }
+            else
+            {
+                horizontal = -1;
+            }
         }
         else
         {
-            horizontal = -1;
+            if (Vector3.Dot(transform.right, _player.transform.position - transform.position) > 0)
+            {
+                horizontal = 1;
+            }
+            else
+            {
+                horizontal = -1;
+            }
         }
 
         _rb.AddForce(Vector2.right * horizontal, ForceMode2D.Impulse);

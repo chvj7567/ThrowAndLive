@@ -9,6 +9,11 @@ public class BulletController : MonoBehaviour
 
     void Update()
     {
+        if (transform.position.x < -25f || transform.position.x > 25f)
+        {
+            MainManager.Game.Despawn(gameObject);
+        }
+
         transform.Translate(_direction * Time.deltaTime * _bulletSpeed);
     }
 
