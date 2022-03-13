@@ -9,6 +9,7 @@ public abstract class BaseController : MonoBehaviour
     protected Define.State _state;
     protected SpriteRenderer _spriteRenderer;
 
+    protected UI_Move _move;
     public Define.GameObjects GameObjectType { get; protected set; } = Define.GameObjects.Unknown;
 
     public Define.State State

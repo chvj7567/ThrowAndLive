@@ -22,26 +22,27 @@ public class PlayerController : BaseController
         _bulletDelay = 1;
         _rb = Util.GetOrAddComponent<Rigidbody2D>(gameObject);
         _rb.freezeRotation = true;
-        _spriteRenderer = Util.GetOrAddComponent<SpriteRenderer>(gameObject);
         State = Define.State.Idle;
         GameObjectType = Define.GameObjects.Player;
+        _spriteRenderer = Util.GetOrAddComponent<SpriteRenderer>(gameObject);
+        _move = Util.FindChild<UI_Move>(MainManager.UI.Root, "MoveUI", true);
     }
 
     protected override void UpdateJump()
     {
-        if (Input.GetButtonDown("Jump") && _jumpCount < _JumpMaxCount)
-        {
-            _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
-            _jumpCount++;
-        }
-
         if (!_isJumping)
         {
             _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
             _isJumping = true;
         }
 
-        if (Input.GetButton("Horizontal"))
+        if ((Input.GetButtonDown("Jump") || _move.IsJump) && _jumpCount < _JumpMaxCount)
+        {
+            _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
+            _jumpCount++;
+        }
+
+        if (Input.GetButton("Horizontal") || _move.IsLeft || _move.IsRight)
         {
             State = Define.State.Run;
         }
@@ -68,8 +69,9 @@ public class PlayerController : BaseController
 
     protected override void UpdateRun()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") || _move.IsJump)
         {
+            _move.IsJump = false;
             //Debug.Log("Run -> Jump");
             State = Define.State.Jump;
         }
@@ -78,16 +80,30 @@ public class PlayerController : BaseController
             //Debug.Log("Run -> Idle");
             State = Define.State.Idle;
         }
+        else if (!Input.GetButton("Horizontal"))
+        {
+            if (!_move.IsLeft && !_move.IsRight)
+            {
+                //Debug.Log("Run -> Idle");
+                State = Define.State.Idle;
+            }
+        }
     }
 
     protected override void UpdateIdle()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") || _move.IsJump)
         {
+            _move.IsJump = false;
             //Debug.Log("Idle -> Jump");
             State = Define.State.Jump;
         }
         else if (Input.GetButton("Horizontal"))
+        {
+            //Debug.Log("Idle -> Run");
+            State = Define.State.Run;
+        }
+        else if (_move.IsLeft || _move.IsRight)
         {
             //Debug.Log("Idle -> Run");
             State = Define.State.Run;
@@ -99,7 +115,12 @@ public class PlayerController : BaseController
         if (State != Define.State.Run)
             return;
 
-        float horizontal = Input.GetAxisRaw("Horizontal");
+        float horizontal;
+
+        if (Input.GetAxisRaw("Horizontal") != 0)
+            horizontal = Input.GetAxisRaw("Horizontal");
+        else
+            horizontal = _move.Horizontal;
 
         _rb.AddForce(Vector2.right * horizontal, ForceMode2D.Impulse);
 
@@ -154,6 +175,8 @@ public class PlayerController : BaseController
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.name == "Monster")
-            MainManager.Game.Despawn(gameObject);
+        {
+            MainManager.Game.EndGame();
+        }
     }
 }

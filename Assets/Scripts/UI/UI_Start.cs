@@ -33,6 +33,7 @@ public class UI_Start : UI_Base
     void StartGame(PointerEventData eventData)
     {
         MainManager.UI.HideUI(gameObject, Define.UI.Start);
+        MainManager.UI.ShowUI("MoveUI", Define.UI.Move);
         MainManager.Game.StartGame();
     }
 

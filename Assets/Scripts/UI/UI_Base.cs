@@ -74,6 +74,10 @@ public abstract class UI_Base : MonoBehaviour
 				evt.OnDownHandler -= action;
 				evt.OnDownHandler += action;
 				break;
+			case Define.UIEvent.Up:
+				evt.OnUpHandler -= action;
+				evt.OnUpHandler += action;
+				break;
 		}
 	}
 
@@ -100,6 +104,9 @@ public abstract class UI_Base : MonoBehaviour
 				break;
 			case Define.UIEvent.Down:
 				evt.OnDownHandler -= action;
+				break;
+			case Define.UIEvent.Up:
+				evt.OnUpHandler -= action;
 				break;
 		}
 	}

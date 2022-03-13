@@ -37,5 +37,6 @@ public class Define
         Update,
         Click,
         Down,
+        Up,
     }
 }

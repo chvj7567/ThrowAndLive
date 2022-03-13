@@ -11,7 +11,7 @@ public class GameManager
     public GameObject MiniMap { get; private set; }
     public GameObject MiniMapCamera { get; private set; }
 
-    HashSet<GameObject> _monsters = new HashSet<GameObject>();
+    public GameObject Spawning { get; private set; }
 
     int _sortOrder = 0;
 
@@ -33,7 +33,6 @@ public class GameManager
                 go.GetComponentInChildren<TilemapRenderer>().sortingOrder = _sortOrder;
                 break;
             case Define.GameObjects.Monster:
-                _monsters.Add(go);
                 Util.FindChild(go, "Square").GetComponent<SpriteRenderer>().sortingOrder = go.GetComponent<SpriteRenderer>().sortingOrder = _sortOrder++;
                 break;
             case Define.GameObjects.Player:
@@ -72,6 +71,8 @@ public class GameManager
             case Define.GameObjects.Player:
                 Player = null;
                 break;
+            case Define.GameObjects.Monster:
+                break;
             case Define.GameObjects.Map:
                 Map = null;
                 break;
@@ -97,8 +98,18 @@ public class GameManager
         camera.SetPlayer(Player);
         camera.SetCamera();
 
-        GameObject spawning = new GameObject("@SpawningMonster");
-        Util.GetOrAddComponent<SpawnMonster>(spawning);
+        Spawning = new GameObject("@SpawningMonster");
+        Util.GetOrAddComponent<SpawnMonster>(Spawning);
+    }
+
+    public void EndGame()
+    {
+        Despawn(Player);
+        Despawn(Spawning);
+        Despawn(Map);
+        Despawn(MiniMap);
+        Despawn(MiniMapCamera);
+        MainManager.UI.ShowUI("EndUI", Define.UI.End);
     }
 
     public void ExitGame()
