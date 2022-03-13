@@ -85,4 +85,28 @@ public class GameManager
 
         MainManager.Resource.Destroy(go);
     }
+
+    public void StartGame()
+    {
+        MainManager.Game.Spawn(Define.GameObjects.Map, "Map");
+        MainManager.Game.Spawn(Define.GameObjects.MiniMap, "MiniMap");
+        MainManager.Game.Spawn(Define.GameObjects.MiniMap, "MiniMap Camera");
+        MainManager.Game.Spawn(Define.GameObjects.Player, "Player");
+
+        CameraController camera = Util.GetOrAddComponent<CameraController>(Camera.main.gameObject);
+        camera.SetPlayer(Player);
+        camera.SetCamera();
+
+        GameObject spawning = new GameObject("@SpawningMonster");
+        Util.GetOrAddComponent<SpawnMonster>(spawning);
+    }
+
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }

@@ -21,4 +21,21 @@ public class Define
         Jump,
         Die,
     }
+
+    public enum UI
+    {
+        Start,
+        Setting,
+        How,
+        Move,
+        TimeScore,
+        End,
+    }
+
+    public enum UIEvent
+    {
+        Update,
+        Click,
+        Down,
+    }
 }

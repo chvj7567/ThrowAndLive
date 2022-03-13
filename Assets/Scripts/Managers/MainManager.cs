@@ -16,9 +16,11 @@ public class MainManager : MonoBehaviour
     #region Core
     PoolManager _pool = new PoolManager();
     ResourceManager _resource = new ResourceManager();
+    UIManager _ui = new UIManager();
 
     public static PoolManager Pool { get { return Instance._pool; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
+    public static UIManager UI { get { return Instance._ui; } }
     #endregion
 
     void Start()
