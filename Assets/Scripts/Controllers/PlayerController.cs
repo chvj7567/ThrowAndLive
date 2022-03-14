@@ -64,18 +64,20 @@ public class PlayerController : BaseController
             _jumpCount = 1;
             if (Input.GetButton("Horizontal") || _move.IsLeft || _move.IsRight)
             {
-                Debug.Log("Jump -> Run");
+                //Debug.Log("Jump -> Run");
                 State = Define.State.Run;
             }
             else
             {
-                Debug.Log("Jump -> Idle");
+                //Debug.Log("Jump -> Idle");
                 State = Define.State.Idle;
             }
         }
     }
     protected override void UpdateDie()
     {
+        _move.IsLeft = false;
+        _move.IsRight = false;
         MainManager.Audio.Play("Die", Define.Audio.Die);
         MainManager.Game.EndGame();
     }

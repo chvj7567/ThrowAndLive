@@ -7,9 +7,10 @@ using UnityEngine.EventSystems;
 public class UI_Move : UI_Base
 {
     Button _left, _right, _jump;
-    public bool IsLeft { get; private set; }
-    public bool IsRight { get; private set; }
+
     public float Horizontal { get; private set; }
+    public bool IsLeft { get; set; }
+    public bool IsRight { get; set; }
     public bool IsJump { get; set; }
     enum Buttons
     {
