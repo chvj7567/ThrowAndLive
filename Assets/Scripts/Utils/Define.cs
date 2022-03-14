@@ -39,4 +39,12 @@ public class Define
         Down,
         Up,
     }
+
+    public enum Audio
+    {
+        Bgm,
+        Shoot,
+        Die,
+        MaxCount,
+    }
 }

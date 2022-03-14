@@ -30,6 +30,9 @@ public class PlayerController : BaseController
 
     protected override void UpdateJump()
     {
+        if (transform.position.y < -5f)
+            State = Define.State.Die;
+
         if (!_isJumping)
         {
             _rb.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
@@ -52,7 +55,7 @@ public class PlayerController : BaseController
     {
         if (collision.gameObject.name == "Monster")
         {
-            MainManager.Game.EndGame();
+            State = Define.State.Die;
         }
 
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Road"))
@@ -70,6 +73,11 @@ public class PlayerController : BaseController
                 State = Define.State.Idle;
             }
         }
+    }
+    protected override void UpdateDie()
+    {
+        MainManager.Audio.Play("Die", Define.Audio.Die);
+        MainManager.Game.EndGame();
     }
 
     protected override void UpdateRun()
@@ -97,6 +105,9 @@ public class PlayerController : BaseController
 
     protected override void UpdateIdle()
     {
+        if (transform.position.y < - 5f)
+            State = Define.State.Die;
+
         if (Input.GetButtonDown("Jump") || _move.IsJump)
         {
             _move.IsJump = false;
@@ -117,6 +128,9 @@ public class PlayerController : BaseController
 
     protected override void Run()
     {
+        if (transform.position.y < -5f)
+            State = Define.State.Die;
+
         if (State != Define.State.Run)
             return;
 
@@ -170,6 +184,8 @@ public class PlayerController : BaseController
                 bullet.transform.position = transform.position - Vector3.right;
                 bulletController.Shoot(-Vector3.right);
             }
+
+            MainManager.Audio.Play("Shoot", Define.Audio.Shoot);
 
             yield return new WaitForSeconds(_bulletDelay);
 

@@ -32,7 +32,7 @@ public class UI_Setting : UI_Base
 
     public void SliderVolume()
     {
-        //MainManager.Audio.SetVolume(_volume.value);
+        MainManager.Audio.SetVolume(_volume.value);
     }
 
     public void BackGame(PointerEventData data)

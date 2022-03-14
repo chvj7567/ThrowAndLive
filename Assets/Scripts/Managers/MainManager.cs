@@ -17,10 +17,12 @@ public class MainManager : MonoBehaviour
     PoolManager _pool = new PoolManager();
     ResourceManager _resource = new ResourceManager();
     UIManager _ui = new UIManager();
+    AudioManager _audio = new AudioManager();
 
     public static PoolManager Pool { get { return Instance._pool; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static UIManager UI { get { return Instance._ui; } }
+    public static AudioManager Audio { get { return Instance._audio; } }
     #endregion
 
     void Start()
@@ -47,5 +49,8 @@ public class MainManager : MonoBehaviour
             DontDestroyOnLoad(go);
             m_instance = go.GetComponent<MainManager>();
         }
+
+        m_instance._pool.Init();
+        m_instance._audio.Init();
     }
 }
