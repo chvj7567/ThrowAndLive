@@ -62,14 +62,14 @@ public class PlayerController : BaseController
         {
             _isJumping = false;
             _jumpCount = 1;
-            if (Input.GetButton("Horizontal"))
+            if (Input.GetButton("Horizontal") || _move.IsLeft || _move.IsRight)
             {
-                //Debug.Log("Jump -> Run");
+                Debug.Log("Jump -> Run");
                 State = Define.State.Run;
             }
             else
             {
-                //Debug.Log("Jump -> Idle");
+                Debug.Log("Jump -> Idle");
                 State = Define.State.Idle;
             }
         }
