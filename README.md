@@ -66,10 +66,11 @@
     해당 과정을 공부하면서 벡터의 내적, 외적을 통해 오브젝트의 앞/뒤/좌/우 혹은 시야각을 통한 오브젝트의 위치 파악하는 방법을 터득하였다.
 
 ## 게임 화면
-<img width="80%" src="https://user-images.githubusercontent.com/37278829/158119270-ff3c5391-4648-458f-af8e-3ddd33909d78.png"/>
-<img width="80%" src="https://user-images.githubusercontent.com/37278829/158119276-56b9fe12-97f0-4068-b83d-c4d989c01fa3.png"/>
-<img width="80%" src="https://user-images.githubusercontent.com/37278829/158119279-1b410b5c-a48b-4c71-9388-f7acba0da7a8.png"/>
-<img width="80%" src="https://user-images.githubusercontent.com/37278829/158119281-26f32554-957e-4c70-b68c-170013e63b48.png"/>
-<img width="80%" src="https://user-images.githubusercontent.com/37278829/158119288-67242951-a2cd-48e1-8070-265597b3b72b.png"/>
-<img width="80%" src="https://user-images.githubusercontent.com/37278829/158119291-d766950f-cd1a-477c-a0f5-521912f0e178.png"/>
-<img width="80%" src="https://user-images.githubusercontent.com/37278829/158119295-62921f1a-7b13-4ded-921a-c13b6f1a5d0d.png"/>
+<img width="80%" src="https://user-images.githubusercontent.com/37278829/158137865-82cec8f2-c4e4-4537-b453-de18bafdfe34.png"/>
+<img width="80%" src="https://user-images.githubusercontent.com/37278829/158137838-a54b2c2a-1597-459e-ae64-9094ed4f164c.png"/>
+<img width="80%" src="https://user-images.githubusercontent.com/37278829/158137848-03b843dd-3417-4a7c-b051-9fbab019ca78.png"/>
+<img width="80%" src="https://user-images.githubusercontent.com/37278829/158137852-b28fbd2f-59c2-406c-a37a-2fcc11880fe1.png"/>
+<img width="80%" src="https://user-images.githubusercontent.com/37278829/158137854-c9227daf-0a58-493e-90e6-5183fa14ce29.png"/>
+<img width="80%" src="https://user-images.githubusercontent.com/37278829/158137858-2a3c25cf-742b-4525-8c5b-ff30d8abb980.png"/>
+<img width="80%" src="https://user-images.githubusercontent.com/37278829/158137859-ffaaefdb-39a9-46d8-a559-454ff343f8fc.png"/>
+<img width="80%" src="https://user-images.githubusercontent.com/37278829/158137863-79fa3a65-9c4d-4303-ae87-217f3dbf9218.png"/>
