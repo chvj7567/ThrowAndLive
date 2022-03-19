@@ -145,7 +145,8 @@ public class PlayerController : BaseController
 
         _rb.AddForce(Vector2.right * horizontal, ForceMode2D.Impulse);
 
-        StartCoroutine(CreateBullet(_check));
+        if (!_check)
+            StartCoroutine(CreateBullet());
 
         if (_rb.velocity.x > 0)
         {
@@ -166,32 +167,29 @@ public class PlayerController : BaseController
         }
     }
 
-    IEnumerator CreateBullet(bool check)
+    IEnumerator CreateBullet()
     {
-        if (!check)
+        _check = true;
+        GameObject bullet = MainManager.Resource.Instantiate("Bullet");
+        BulletController bulletController = Util.GetOrAddComponent<BulletController>(bullet);
+
+        if (_rb.velocity.x > 0)
         {
-            _check = true;
-            GameObject bullet = MainManager.Resource.Instantiate("Bullet");
-            BulletController bulletController = Util.GetOrAddComponent<BulletController>(bullet);
-
-            if (_rb.velocity.x > 0)
-            {
-                _spriteRenderer.flipX = false;
-                bullet.transform.position = transform.position + Vector3.right;
-                bulletController.Shoot(Vector3.right);
-            }
-            else if (_rb.velocity.x < 0)
-            {
-                _spriteRenderer.flipX = true;
-                bullet.transform.position = transform.position - Vector3.right;
-                bulletController.Shoot(-Vector3.right);
-            }
-
-            MainManager.Audio.Play("Shoot", Define.Audio.Shoot);
-
-            yield return new WaitForSeconds(_bulletDelay);
-
-            _check = false;
+            _spriteRenderer.flipX = false;
+            bullet.transform.position = transform.position + Vector3.right;
+            bulletController.Shoot(Vector3.right);
         }
+        else if (_rb.velocity.x < 0)
+        {
+            _spriteRenderer.flipX = true;
+            bullet.transform.position = transform.position - Vector3.right;
+            bulletController.Shoot(-Vector3.right);
+        }
+
+        MainManager.Audio.Play("Shoot", Define.Audio.Shoot);
+
+        yield return new WaitForSeconds(_bulletDelay);
+
+        _check = false;
     }
 }
