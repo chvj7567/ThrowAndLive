@@ -2,15 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : BaseController
 {
     GameObject _player;
     Vector3 cameraPos;
+    float _aspectRatio;
+    float _verticalRatio;
 
-    void Awake()
+    public override void Init()
     {
         transform.position = new Vector3(0, 0, -10f);
+        _aspectRatio = 19f;
+        _verticalRatio = 9f;
+
+        Rect rect = Camera.main.rect;
+        float scaleHeight = ((float)Screen.width / Screen.height) / (_aspectRatio / _verticalRatio);
+        float scaleWidth = 1f / scaleHeight;
+
+        if (scaleHeight < 1)
+        {
+            rect.height = scaleHeight;
+            rect.y = (1f - scaleHeight) / 2f;
+        }
+        else
+        {
+            rect.width = scaleWidth;
+            rect.x = (1f - scaleWidth) / 2f;
+        }
+
+        Camera.main.rect = rect;
     }
+
     void LateUpdate()
     {
         Vector3 playerPos;

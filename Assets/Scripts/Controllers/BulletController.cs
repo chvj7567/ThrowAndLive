@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+public class BulletController : BaseController
 {
     Vector3 _direction;
-    float _bulletSpeed = 5f;
+    float _bulletSpeed;
+
+    public override void Init()
+    {
+        _bulletSpeed = 5f;
+    }
 
     void Update()
     {
